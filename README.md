@@ -79,15 +79,25 @@ The ETL was built using **SQL Server Integration Services (SSIS)** to load data 
 - Handle **Slowly Changing Dimensions** (`dim_product` and `dim_customer`)  
 - Insert **"Unknown" rows** for missing references  
 
-**Fact Table ETL:**  
+### Fact Table ETL  
 - Maintains **referential integrity** with all dimensions  
 - Calculates **extended sales and cost**  
-- Handles **NULL or invalid references** (mapped to "Unknown")  
+- Handles **NULL or invalid references** (mapped to `"Unknown"`)  
+- Implemented using **two ETL approaches**:  
+  - **Full Load** → Reloads the entire fact table from source to ensure a complete refresh. Best for initial loads or when data consistency must be fully validated.  
+  - **Incremental Load** → Loads only new or updated records (based on `ModifiedDate`), improving performance and reducing processing time. Ideal for regular/daily updates.  
+
 
 **Packages Overview:**  
 - **`Dim_Product` Package:**  <img width="960" height="608" alt="image" src="https://github.com/user-attachments/assets/25999ca6-842a-4726-9364-495fb030566b" />
 - **`Dim_Date` Package:** <img width="485" height="440" alt="image" src="https://github.com/user-attachments/assets/672e1632-dbb9-41a3-9db9-4af401fdcf98" />
 - **`Dim_Territory` Package:** <img width="539" height="373" alt="image" src="https://github.com/user-attachments/assets/48b1aaa5-7603-4799-9f62-87c2097066a1" />
+- **`Dim_Customer` Package:** <img width="1577" height="767" alt="Screenshot 2025-09-23 024316" src="https://github.com/user-attachments/assets/a39f0b44-2f55-4a77-b62b-9038f478f02c" />
+- **`Fact_Sales` Package:** <img width="973" height="602" alt="Screenshot 2025-09-23 001113" src="https://github.com/user-attachments/assets/afaac28a-b649-44ec-862f-36714c42d478" />
+incremental load data control flow <img width="946" height="393" alt="image" src="https://github.com/user-attachments/assets/158b8341-ee4b-47d7-bbea-08acbcc12c8f" />
+
+
+
 
 
 
